@@ -1,5 +1,6 @@
 // dashboard.dart
 
+import 'package:card2go/login.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
@@ -172,21 +173,13 @@ class _MyHomePageState extends State<MyHomePage> {
               ListTile(
                 title: const Text('Account'),
                 selected: _selectedIndex == 0,
-                onTap: () {
-                  // Update the state of the app
-                  _onItemTapped(0);
-                  // Then close the drawer
-                  Navigator.pop(context);
-                },
               ),
               ListTile(
                 title: const Text('Sign Out'),
                 selected: _selectedIndex == 1,
                 onTap: () {
-                  // Update the state of the app
-                  _onItemTapped(1);
-                  // Then close the drawer
-                  Navigator.pop(context);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginPage()));
                 },
               ),
               ListTile(

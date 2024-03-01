@@ -14,14 +14,14 @@ class Button extends StatelessWidget {
         margin: EdgeInsets.only(top: 10),
 
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: Colors.transparent,
             borderRadius: BorderRadius.circular(30),
             border: Border.all(width: 2, color: Colors.black)), // BoxDecoration
         child: const Center(
           child: Text(
             "Sign Up",
             style: TextStyle(
-              color: Colors.black,
+              color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 24,
             ), // TextStyle

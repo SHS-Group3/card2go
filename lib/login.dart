@@ -72,10 +72,13 @@ class LoginPage extends StatelessWidget {
               const SizedBox(height: 10),
 
               //forgot passsword?
-              MyButton(onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => MyApp()));
-              }),
+              MyButton(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MyApp()));
+                },
+                text: "Log In",
+              ),
 
               const SizedBox(height: 20),
               //or continue with

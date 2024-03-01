@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class MyTextField extends StatelessWidget {
+class SU extends StatelessWidget {
   final controller;
   final String hintText;
   final bool obsecureText;
 
-  const MyTextField(
+  const SU(
       {super.key,
       required this.controller,
       required this.hintText,
@@ -14,13 +14,13 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50,
+      height: 40,
       child: TextField(
         textAlign: TextAlign.center,
         controller: controller,
         obscureText: obsecureText,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(5),
+          contentPadding: EdgeInsets.all(10),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
           ),

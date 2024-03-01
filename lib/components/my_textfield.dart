@@ -5,28 +5,29 @@ class MyTextField extends StatelessWidget {
   final String hintText;
   final bool obsecureText;
 
-  const MyTextField({
-    super.key,
-    required this.controller,
-    required this.hintText,
-    required this.obsecureText
-  });
+  const MyTextField(
+      {super.key,
+      required this.controller,
+      required this.hintText,
+      required this.obsecureText});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+    return SizedBox(
+      height: 50,
       child: TextField(
+        textAlign: TextAlign.center,
         controller: controller,
         obscureText: obsecureText,
         decoration: InputDecoration(
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey),
+          contentPadding: EdgeInsets.all(5),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey),
+            borderRadius: BorderRadius.circular(30),
           ),
-          fillColor: Colors.grey,
+          fillColor: Colors.white,
           filled: true,
           hintText: hintText,
         ),

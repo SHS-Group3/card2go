@@ -1,6 +1,5 @@
-import 'package:card2go/components/my_button.dart';
-import 'package:card2go/components/signtextfield.dart';
-import 'package:card2go/components/square_tile.dart';
+import 'package:card2go/components/button.dart';
+import 'package:card2go/components/inputfield.dart';
 import 'package:flutter/material.dart';
 
 class SignPage extends StatefulWidget {
@@ -11,10 +10,11 @@ class SignPage extends StatefulWidget {
 }
 
 class _SignPageState extends State<SignPage> {
-  final SU_Username = TextEditingController();
-  final SU_email = TextEditingController();
-  final SU_Contact = TextEditingController();
-  final SU_Password = TextEditingController();
+  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
+  final contactController = TextEditingController();
+  final passwordController = TextEditingController();
+
   var _agreed = false;
 
   @override
@@ -75,8 +75,8 @@ class _SignPageState extends State<SignPage> {
                     ),
                   ),
                 ),
-                SU(
-                    controller: SU_Username,
+                InputField(
+                    controller: usernameController,
                     hintText: "Username",
                     obsecureText: true),
                 const SizedBox(height: 4),
@@ -90,7 +90,7 @@ class _SignPageState extends State<SignPage> {
                     ),
                   ),
                 ),
-                SU(controller: SU_email, hintText: "Email", obsecureText: true),
+                InputField(controller: emailController, hintText: "Email", obsecureText: true),
                 const SizedBox(height: 4),
                 Padding(
                   padding: EdgeInsets.only(left: 15),
@@ -102,8 +102,8 @@ class _SignPageState extends State<SignPage> {
                     ),
                   ),
                 ),
-                SU(
-                    controller: SU_Contact,
+                InputField(
+                    controller: contactController,
                     hintText: "Contact Number",
                     obsecureText: true),
                 const SizedBox(height: 4),
@@ -117,8 +117,8 @@ class _SignPageState extends State<SignPage> {
                     ),
                   ),
                 ),
-                SU(
-                    controller: SU_Password,
+                InputField(
+                    controller: passwordController,
                     hintText: "Password",
                     obsecureText: true),
                 const SizedBox(height: 20),
@@ -144,7 +144,7 @@ class _SignPageState extends State<SignPage> {
                 const SizedBox(
                   height: 15,
                 ),
-                MyButton(onTap: () {}, text: "Sign Up"),
+                Button(onTap: () {}, text: "Sign Up"),
                 const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -155,8 +155,8 @@ class _SignPageState extends State<SignPage> {
                 ),
                 const SizedBox(height: 0),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  SquareTile(
-                    imagePath: 'assets/images/google.png',
+                  Container(
+                    child: Image.asset('assets/images/google.png', height:40)
                   )
                 ]),
               ],

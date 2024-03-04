@@ -1,9 +1,7 @@
-import 'package:card2go/components/Signup_button.dart';
-import 'package:card2go/components/Signuppage.dart';
-import 'package:card2go/components/dashboard.dart';
-import 'package:card2go/components/my_button.dart';
-import 'package:card2go/components/my_textfield.dart';
-import 'package:card2go/components/square_tile.dart';
+import 'package:card2go/components/button.dart';
+import 'package:card2go/signup_page.dart';
+import 'package:card2go/dashboard.dart';
+import 'package:card2go/components/inputfield.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -49,7 +47,7 @@ class LoginPage extends StatelessWidget {
               ),
               //username texfield
 
-              MyTextField(
+              InputField(
                   controller: usernameController,
                   hintText: "E-Mail",
                   obsecureText: false),
@@ -65,17 +63,17 @@ class LoginPage extends StatelessWidget {
               ),
               SizedBox(height: 10),
               //password textfield
-              MyTextField(
+              InputField(
                   controller: passwordController,
                   hintText: "Password",
                   obsecureText: true),
               const SizedBox(height: 10),
 
               //forgot passsword?
-              MyButton(
+              Button(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyApp()));
+                      MaterialPageRoute(builder: (context) => Dashboard()));
                 },
                 text: "Log In",
               ),
@@ -111,15 +109,17 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                SquareTile(
-                  imagePath: 'assets/images/google.png',
+                Container(
+                    child: Image.asset('assets/images/google.png', height:40)
                 )
               ]),
               Spacer(),
-              Button(onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SignPage()));
-              }),
+              Button(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SignPage()));
+                  },
+                  text: "Sign up"),
             ]),
           )),
     );

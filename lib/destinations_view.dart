@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
+import 'destination_page.dart';
 
 class DestinationsView extends StatelessWidget {
   DestinationsView({super.key});
@@ -8,45 +8,27 @@ class DestinationsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(padding: EdgeInsets.symmetric(horizontal: 15), children: [
-      POICard(
+      POICard(POI(
           name: "Sampalok Lake",
           address: "Calamba, Laguma",
-          image: Image.network(
+          imageUrl:
               "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcTg1GTmmBC6065Zg2BtXjwEf6zwkoOMljkE8CrecRYJRaEg5Rkmwi97a44zSDXjITiNRzZ47snDnkU9ycyCEoR4ffxd3A3vo8Myj0-a1cc")),
-      POICard(
+      POICard(POI(
           name: "Enchanted Kingdom",
           address: "Sta.Rosa, Laguna",
-          image: Image.network(
+          imageUrl:
               "https://images.summitmedia-digital.com/spotph/images/2023/05/19/enchanted-kingdom-7-1684448212.jpg")),
-      POICard(
-          name: "neko",
-          address: "Calamba City",
-          image: Image.network(
-              "https://cataas.com/cat?type=square&fit=fill&position=centre&html=false&json=false")),
-      POICard(
-          name: "neko1",
-          address: "Calamba City",
-          image: Image.network(
-              "https://cataas.com/cat?type=square&fit=fill&position=centre&html=false&json=false")),
-      POICard(
-          name: "neko2",
-          address: "Calamba City",
-          image: Image.network(
-              "https://cataas.com/cat?type=square&fit=fill&position=centre&html=false&json=false")),
+      POICard(POI(name: "neko2", address: "neko")),
+      POICard(POI(name: "neko1", address: "neko")),
+      POICard(POI(name: "neko", address: "neko"))
     ]);
   }
 }
 
 class POICard extends StatelessWidget {
-  Image image;
-  String name;
-  String address;
+  POI poi;
 
-  POICard(
-      {super.key,
-      required this.image,
-      required this.name,
-      required this.address});
+  POICard(this.poi, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -58,23 +40,29 @@ class POICard extends StatelessWidget {
           height: 200,
           child: InkWell(
             onTap: () {
-
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DestinationPage(poi)));
             },
             child: Stack(children: [
               Hero(
-                  tag: name,
-                  child:
-                      Ink.image(fit: BoxFit.fitWidth, image: image.image)),
+                  tag: poi.name,
+                  child: Material(
+                    child: Ink.image(
+                        fit: BoxFit.fitWidth,
+                        image: Image.network(poi.imageUrl).image),
+                  )),
               Padding(
                 padding: EdgeInsets.all(15),
                 child: Column(children: [
                   Align(
                       alignment: Alignment.topLeft,
-                      child: Text(name,
+                      child: Text(poi.name,
                           style: TextStyle(fontSize: 35, color: Colors.white))),
                   Align(
                       alignment: Alignment.topLeft,
-                      child: Text(address,
+                      child: Text(poi.address,
                           style: TextStyle(fontSize: 20, color: Colors.white))),
                   Expanded(
                       child: Align(
@@ -93,5 +81,15 @@ class POICard extends StatelessWidget {
 }
 
 class POI {
+  final String name;
+  final String address;
+  final String description;
+  final String imageUrl;
 
+  POI(
+      {required this.name,
+      required this.address,
+      this.description = "among us",
+      this.imageUrl =
+          "https://cataas.com/cat?type=square&fit=fill&position=centre&html=false&json=false"});
 }

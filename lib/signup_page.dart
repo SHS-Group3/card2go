@@ -90,7 +90,10 @@ class _SignPageState extends State<SignPage> {
                     ),
                   ),
                 ),
-                InputField(controller: emailController, hintText: "Email", obsecureText: true),
+                InputField(
+                    controller: emailController,
+                    hintText: "Email",
+                    obsecureText: true),
                 const SizedBox(height: 4),
                 Padding(
                   padding: EdgeInsets.only(left: 15),
@@ -156,8 +159,8 @@ class _SignPageState extends State<SignPage> {
                 const SizedBox(height: 0),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Container(
-                    child: Image.asset('assets/images/google.png', height:40)
-                  )
+                      child:
+                          Image.asset('assets/images/google.png', height: 32))
                 ]),
               ],
             ),

@@ -1,4 +1,4 @@
-import 'package:card2go/components/hotel_page.dart';
+import 'package:card2go/pages/hotel_page.dart';
 import 'package:flutter/material.dart';
 
 class HotelView extends StatelessWidget {

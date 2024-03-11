@@ -1,3 +1,4 @@
+import 'package:card2go/api/api.dart';
 import 'package:card2go/components/button.dart';
 import 'package:card2go/components/inputfield.dart';
 import 'package:flutter/material.dart';
@@ -76,9 +77,9 @@ class _SignPageState extends State<SignPage> {
                   ),
                 ),
                 InputField(
-                    controller: usernameController,
-                    hintText: "Username",
-                    obsecureText: true),
+                  controller: usernameController,
+                  hintText: "Username",
+                ),
                 const SizedBox(height: 4),
                 Padding(
                   padding: EdgeInsets.only(left: 15),
@@ -91,9 +92,9 @@ class _SignPageState extends State<SignPage> {
                   ),
                 ),
                 InputField(
-                    controller: emailController,
-                    hintText: "Email",
-                    obsecureText: true),
+                  controller: emailController,
+                  hintText: "Email",
+                ),
                 const SizedBox(height: 4),
                 Padding(
                   padding: EdgeInsets.only(left: 15),
@@ -106,9 +107,9 @@ class _SignPageState extends State<SignPage> {
                   ),
                 ),
                 InputField(
-                    controller: contactController,
-                    hintText: "Contact Number",
-                    obsecureText: true),
+                  controller: contactController,
+                  hintText: "Contact Number",
+                ),
                 const SizedBox(height: 4),
                 Padding(
                   padding: EdgeInsets.only(left: 15),
@@ -147,7 +148,18 @@ class _SignPageState extends State<SignPage> {
                 const SizedBox(
                   height: 15,
                 ),
-                Button(onTap: () {}, text: "Sign Up"),
+                Button(
+                    onTap: () async {
+                      try {
+                        await Authentication.register(
+                            usernameController.text.trim(),
+                            passwordController.text.trim());
+                        Navigator.of(context).pop();
+                      } catch (err) {
+                        print(err);
+                      }
+                    },
+                    text: "Sign Up"),
                 const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5),

@@ -1,27 +1,41 @@
+import 'package:card2go/api/api.dart';
 import 'package:flutter/material.dart';
 
-import 'destination_page.dart';
+import '../pages/destination_page.dart';
 
-class DestinationsView extends StatelessWidget {
+class DestinationsView extends StatefulWidget {
   DestinationsView({super.key});
 
   @override
+  State<DestinationsView> createState() => _DestinationsViewState();
+}
+
+class _DestinationsViewState extends State<DestinationsView> {
+  List<POI> pois = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    loadPOIs();
+  }
+
+  void loadPOIs() async {
+    List<POI> pois = await POIs.getPOIs();
+
+    setState(() {
+      this.pois = pois;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ListView(padding: EdgeInsets.symmetric(horizontal: 15), children: [
-      POICard(POI(
-          name: "Sampalok Lake",
-          address: "Calamba, Laguma",
-          imageUrl:
-              "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcTg1GTmmBC6065Zg2BtXjwEf6zwkoOMljkE8CrecRYJRaEg5Rkmwi97a44zSDXjITiNRzZ47snDnkU9ycyCEoR4ffxd3A3vo8Myj0-a1cc")),
-      POICard(POI(
-          name: "Enchanted Kingdom",
-          address: "Sta.Rosa, Laguna",
-          imageUrl:
-              "https://images.summitmedia-digital.com/spotph/images/2023/05/19/enchanted-kingdom-7-1684448212.jpg")),
-      POICard(POI(name: "neko2", address: "neko")),
-      POICard(POI(name: "neko1", address: "neko")),
-      POICard(POI(name: "neko", address: "neko"))
-    ]);
+    return ListView.builder(
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        itemCount: pois.length,
+        itemBuilder: (context, index) {
+          return POICard(pois[index]);
+        });
   }
 }
 
@@ -81,13 +95,15 @@ class POICard extends StatelessWidget {
 }
 
 class POI {
+  final int id;
   final String name;
   final String address;
   final String description;
   final String imageUrl;
 
   POI(
-      {required this.name,
+      {required this.id,
+      required this.name,
       required this.address,
       this.description = "among us",
       this.imageUrl =

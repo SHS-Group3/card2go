@@ -1,10 +1,12 @@
 // dashboard.dart
 
-import 'package:card2go/booked_view.dart';
-import 'package:card2go/destinations_view.dart';
-import 'package:card2go/hotel_view.dart';
 import 'package:card2go/login.dart';
+import 'package:card2go/models/booking_model.dart';
+import 'package:card2go/views/booked_view.dart';
+import 'package:card2go/views/destinations_view.dart';
+import 'package:card2go/views/hotel_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
@@ -13,12 +15,16 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: appTitle,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(iconTheme: IconThemeData(color: Colors.white)),
-      home: MyHomePage(title: "CARD2GO"),
-    );
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => BookingModel()),
+        ],
+        child: MaterialApp(
+          title: appTitle,
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(iconTheme: IconThemeData(color: Colors.white)),
+          home: MyHomePage(title: appTitle),
+        ));
   }
 }
 
@@ -193,4 +199,3 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
   }
 }
-

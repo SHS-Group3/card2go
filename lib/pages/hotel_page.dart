@@ -1,11 +1,12 @@
-import 'package:card2go/components/button.dart';
-import 'package:card2go/destinations_view.dart';
+import 'package:card2go/components/button2.dart';
 import 'package:flutter/material.dart';
 
-class DestinationPage extends StatelessWidget {
-  POI poi;
+import '../views/hotel_view.dart';
+import 'hotel_booking_page.dart';
 
-  DestinationPage(this.poi);
+class HotelPage extends StatelessWidget {
+  Hotel hotel;
+  HotelPage(this.hotel);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,10 +23,14 @@ class DestinationPage extends StatelessWidget {
           child: SafeArea(
             child: Container(
               color: Colors.transparent,
-              height: 100,
-              child: Button(
-                text: "amog",
-                onTap: () {},
+              height: 130,
+              padding: EdgeInsets.all(20),
+              child: Button2(
+                text: "Book now!",
+                onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => HotelBooking()));
+                },
               ),
             ),
           )),
@@ -47,9 +52,9 @@ class DestinationPage extends StatelessWidget {
                       children: [
                         Positioned.fill(
                           child: Hero(
-                            tag: poi.name,
+                            tag: hotel.name,
                             child: Image.network(
-                              poi.imageUrl,
+                              hotel.imageUrl,
                               fit: BoxFit.fitWidth,
                             ),
                           ),
@@ -62,7 +67,7 @@ class DestinationPage extends StatelessWidget {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  poi.name,
+                                  hotel.name,
                                   style: TextStyle(
                                     fontSize: 30,
                                     color: Colors.white,
@@ -72,7 +77,7 @@ class DestinationPage extends StatelessWidget {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  poi.address,
+                                  hotel.address,
                                   style: TextStyle(
                                     fontSize: 20,
                                     color: Colors.white,

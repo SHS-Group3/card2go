@@ -1,15 +1,24 @@
+import 'package:card2go/api/api.dart';
 import 'package:card2go/components/button.dart';
-import 'package:card2go/signup_page.dart';
-import 'package:card2go/dashboard.dart';
 import 'package:card2go/components/inputfield.dart';
+import 'package:card2go/dashboard.dart';
+import 'package:card2go/signup_page.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final usernameController = TextEditingController();
 
   final passwordController = TextEditingController();
+  String? error;
+
+  bool _loggingIn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +57,7 @@ class LoginPage extends StatelessWidget {
               //username texfield
 
               InputField(
+                  enabled: !_loggingIn,
                   controller: usernameController,
                   hintText: "E-Mail",
                   obsecureText: false),
@@ -64,16 +74,26 @@ class LoginPage extends StatelessWidget {
               SizedBox(height: 10),
               //password textfield
               InputField(
+                  enabled: !_loggingIn,
                   controller: passwordController,
                   hintText: "Password",
                   obsecureText: true),
               const SizedBox(height: 10),
 
-              //forgot passsword?
+              //forgot password?
               Button(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Dashboard()));
+                enabled: !_loggingIn,
+                onTap: () async {
+                  try {
+                    await Authentication.authenticate(
+                        usernameController.text, passwordController.text);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Dashboard()));
+                  } catch (err) {
+                    print(err);
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(err.toString())));
+                  }
                 },
                 text: "Log In",
               ),
@@ -110,8 +130,7 @@ class LoginPage extends StatelessWidget {
               ),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Container(
-                    child: Image.asset('assets/images/google.png', height:40)
-                )
+                    child: Image.asset('assets/images/google.png', height: 40))
               ]),
               Spacer(),
               Button(

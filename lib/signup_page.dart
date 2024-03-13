@@ -1,4 +1,4 @@
-import 'package:card2go/api/api.dart';
+import 'package:card2go/api/services.dart';
 import 'package:card2go/components/button.dart';
 import 'package:card2go/components/inputfield.dart';
 import 'package:flutter/material.dart';
@@ -151,9 +151,12 @@ class _SignPageState extends State<SignPage> {
                 Button(
                     onTap: () async {
                       try {
-                        await Authentication.register(
-                            usernameController.text.trim(),
-                            passwordController.text.trim());
+                        await AuthService.register(
+                          usernameController.text.trim(),
+                          passwordController.text.trim(),
+                          emailController.text.trim(),
+                          contactController.text.trim(),
+                        );
                         Navigator.of(context).pop();
                       } catch (err) {
                         print(err);

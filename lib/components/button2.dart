@@ -22,9 +22,12 @@ class Button2 extends StatelessWidget {
         margin: margin,
 
         decoration: BoxDecoration(
-            color: Colors.green,
+            color: Color(0xff123a05),
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(width: 1, color: Colors.green)), // BoxDecoration
+            border: Border.all(
+              width: 1,
+              color: Color(0xff123a05),
+            )), // BoxDecoration
         child: Center(
           child: Text(
             text,

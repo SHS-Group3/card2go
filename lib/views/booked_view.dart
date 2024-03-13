@@ -1,14 +1,20 @@
 import 'package:card2go/models/booking_model.dart';
 import 'package:card2go/pages/booked_page.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class BookedView extends StatelessWidget {
+class BookedView extends StatefulWidget {
+  @override
+  State<BookedView> createState() => _BookedViewState();
+}
+
+class _BookedViewState extends State<BookedView> {
   @override
   Widget build(BuildContext context) {
     var model = context.watch<BookingModel>();
     return Scaffold(
-      backgroundColor: Color(0xFFFDEECE),
+      backgroundColor: Color(0xFFE3DFA6),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView.builder(
@@ -39,14 +45,15 @@ class BookedView extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    booking.destName,
+                    booking.destination.name,
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Spacer(),
                 Align(
                   alignment: Alignment.centerRight,
-                  child: (Text('Date')),
+                  child: (Text("Date "
+                      "${DateFormat("dd-MM-yyyy").format(booking.on)}")),
                 ),
                 Align(
                     alignment: Alignment.centerRight,

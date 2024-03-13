@@ -1,4 +1,4 @@
-import 'package:card2go/api/api.dart';
+import 'package:card2go/api/services.dart';
 import 'package:card2go/components/button.dart';
 import 'package:card2go/components/inputfield.dart';
 import 'package:card2go/dashboard.dart';
@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                 enabled: !_loggingIn,
                 onTap: () async {
                   try {
-                    await Authentication.authenticate(
+                    await AuthService.authenticate(
                         usernameController.text, passwordController.text);
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => Dashboard()));

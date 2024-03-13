@@ -1,5 +1,7 @@
-import 'package:card2go/api/api.dart';
+import 'package:card2go/api/services.dart';
+import 'package:card2go/models/search_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../pages/destination_page.dart';
 
@@ -11,7 +13,7 @@ class DestinationsView extends StatefulWidget {
 }
 
 class _DestinationsViewState extends State<DestinationsView> {
-  List<POI> pois = [];
+  List<Destination> pois = [];
 
   @override
   void initState() {
@@ -21,7 +23,8 @@ class _DestinationsViewState extends State<DestinationsView> {
   }
 
   void loadPOIs() async {
-    List<POI> pois = await POIs.getPOIs();
+    List<Destination> pois =
+        await DestinationsService.getDestinations(hotels: false);
 
     setState(() {
       this.pois = pois;
@@ -30,24 +33,28 @@ class _DestinationsViewState extends State<DestinationsView> {
 
   @override
   Widget build(BuildContext context) {
+    SearchModel search = context.watch<SearchModel>();
+
+    List<Destination> filtered =
+        pois.where((e) => e.name.contains(search.filter)).toList();
     return ListView.builder(
         padding: EdgeInsets.symmetric(horizontal: 15),
-        itemCount: pois.length,
+        itemCount: filtered.length,
         itemBuilder: (context, index) {
-          return POICard(pois[index]);
+          return POICard(filtered[index]);
         });
   }
 }
 
 class POICard extends StatelessWidget {
-  POI poi;
+  Destination poi;
 
   POICard(this.poi, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      clipBehavior: Clip.antiAliasWithSaveLayer,
+      clipBehavior: Clip.antiAlias,
       margin: EdgeInsets.only(top: 15),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Ink(
@@ -94,18 +101,41 @@ class POICard extends StatelessWidget {
   }
 }
 
-class POI {
+class Destination {
   final int id;
   final String name;
   final String address;
   final String description;
   final String imageUrl;
+  final bool isLodging;
+  final double ratings;
+  final int beds;
+  final int rooms;
+  final List<Package> packages;
 
-  POI(
+  Destination(
       {required this.id,
       required this.name,
       required this.address,
       this.description = "among us",
       this.imageUrl =
-          "https://cataas.com/cat?type=square&fit=fill&position=centre&html=false&json=false"});
+          "https://cataas.com/cat?type=square&fit=fill&position=centre&html=false&json=false",
+      this.packages = const [],
+      required this.isLodging,
+      required this.ratings,
+      required this.beds,
+      required this.rooms});
+}
+
+class Package {
+  final int id;
+  final String title;
+  final String description;
+  final double price;
+
+  Package(
+      {required this.id,
+      required this.title,
+      required this.description,
+      required this.price});
 }

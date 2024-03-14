@@ -1,50 +1,67 @@
-import 'package:card2go/components/hotel_page.dart';
+import 'package:card2go/api/services.dart';
+import 'package:card2go/models/search_model.dart';
+import 'package:card2go/pages/destination_page.dart';
+import 'package:card2go/views/destinations_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class HotelView extends StatelessWidget {
+class HotelView extends StatefulWidget {
   HotelView({super.key});
 
   @override
+  State<HotelView> createState() => _HotelViewState();
+}
+
+class _HotelViewState extends State<HotelView> {
+  List<Destination> hotel = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    loadHotels();
+  }
+
+  void loadHotels() async {
+    List<Destination> hotel =
+        await DestinationsService.getDestinations(hotels: true);
+    setState(() {
+      this.hotel = hotel;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ListView(padding: EdgeInsets.symmetric(horizontal: 15), children: [
-      HotelCard(
-        Hotel(
-            name: "Casa San Pablo",
-            address: "Calamba, Laguma",
-            imageUrl:
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRK6v5o7crx-SuRYhL4JFss8cBH4GhKBgoKNA&usqp=CAU"),
-      ),
-      HotelCard(
-        Hotel(
-            name: "Enchanted Kingdom",
-            address: "Sta.Rosa, Laguna",
-            imageUrl:
-                "https://images.summitmedia-digital.com/spotph/images/2023/05/19/enchanted-kingdom-7-1684448212.jpg"),
-      ),
-      HotelCard(Hotel(
-        name: "cat",
-        address: "cat",
-      ))
-    ]);
+    SearchModel search = context.watch<SearchModel>();
+
+    List<Destination> filtered =
+        hotel.where((e) => e.name.contains(search.filter)).toList();
+    return ListView.builder(
+        itemCount: filtered.length,
+        itemBuilder: (context, index) {
+          return HotelCard(filtered[index]);
+        });
   }
 }
 
 class HotelCard extends StatelessWidget {
-  Hotel hotel;
+  Destination hotel;
   HotelCard(this.hotel, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-        margin: EdgeInsets.only(top: 15),
+        margin: EdgeInsets.only(top: 14, left: 6, right: 6),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => HotelPage(hotel)));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DestinationPage(hotel)));
             },
             child: Ink(
-              color: Colors.green,
+              color: Color(0xff123a05),
               child: Column(
                 children: [
                   Ink(
@@ -101,16 +118,4 @@ class HotelCard extends StatelessWidget {
               ),
             )));
   }
-}
-
-class Hotel {
-  final String imageUrl;
-  final String name;
-  final String address;
-
-  Hotel(
-      {this.imageUrl =
-          "https://cataas.com/cat?type=square&fit=fill&position=centre&html=false&json=false",
-      required this.name,
-      required this.address});
 }

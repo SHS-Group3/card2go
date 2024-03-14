@@ -1,10 +1,14 @@
 // dashboard.dart
 
-import 'package:card2go/booked_view.dart';
-import 'package:card2go/destinations_view.dart';
-import 'package:card2go/hotel_view.dart';
 import 'package:card2go/login.dart';
+import 'package:card2go/models/booking_model.dart';
+import 'package:card2go/models/search_model.dart';
+import 'package:card2go/pages/account_page.dart';
+import 'package:card2go/views/booked_view.dart';
+import 'package:card2go/views/destinations_view.dart';
+import 'package:card2go/views/hotel_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
@@ -13,12 +17,25 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: appTitle,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(iconTheme: IconThemeData(color: Colors.white)),
-      home: MyHomePage(title: "CARD2GO"),
-    );
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => SearchModel()),
+          ChangeNotifierProvider(create: (context) => BookingModel()),
+        ],
+        child: MaterialApp(
+          title: appTitle,
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+              buttonTheme: ButtonThemeData(buttonColor: Color(0xff123a05)),
+              appBarTheme: AppBarTheme(
+                backgroundColor: Colors.white,
+                iconTheme: IconThemeData(
+                    color: Colors
+                        .white), // set backbutton color here which will reflect in all screens.
+              ),
+              iconTheme: IconThemeData(color: Colors.white)),
+          home: MyHomePage(title: appTitle),
+        ));
   }
 }
 
@@ -71,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xFFFDEECE),
+        backgroundColor: Color(0xFFE3DFA6),
         appBar: PreferredSize(
             preferredSize: Size(double.infinity, 120),
             child: AppBar(
@@ -79,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
               shape: RoundedRectangleBorder(
                   borderRadius:
                       BorderRadius.vertical(bottom: Radius.circular(20))),
-              backgroundColor: Color(0xff2ea308),
+              backgroundColor: Color(0xff123a05),
               flexibleSpace: Padding(
                   padding: EdgeInsets.all(10),
                   child: Column(
@@ -99,6 +116,10 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                             child: TextFormField(
                               style: const TextStyle(fontSize: 15),
+                              onChanged: (String n) {
+                                Provider.of<SearchModel>(context, listen: false)
+                                    .set(n);
+                              },
                               decoration: InputDecoration(
                                   fillColor: Colors.white,
                                   filled: true,
@@ -106,7 +127,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                   hintText: "Search",
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(40),
-                                    borderSide: BorderSide(color: Colors.green),
+                                    borderSide: BorderSide(
+                                      color: Color(0xff123a05),
+                                    ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(40),
@@ -132,13 +155,17 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               const DrawerHeader(
                 decoration: BoxDecoration(
-                  color: Colors.green,
+                  color: Color(0xff123a05),
                 ),
                 child: Text('Settings'),
               ),
               ListTile(
                 title: const Text('Account'),
                 selected: _selectedIndex == 0,
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AccountPage()));
+                },
               ),
               ListTile(
                 title: const Text('Sign Out'),
@@ -164,7 +191,7 @@ class _MyHomePageState extends State<MyHomePage> {
         bottomNavigationBar: ClipRRect(
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
           child: BottomNavigationBar(
-            backgroundColor: Colors.green,
+            backgroundColor: Color(0xff123a05),
             items: [
               BottomNavigationBarItem(
                 icon: Icon(
@@ -193,4 +220,3 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
   }
 }
-

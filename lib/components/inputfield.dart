@@ -4,18 +4,21 @@ class InputField extends StatelessWidget {
   final controller;
   final String hintText;
   final bool obsecureText;
+  final bool enabled;
 
   const InputField(
       {super.key,
       required this.controller,
       required this.hintText,
-      required this.obsecureText});
+      this.obsecureText = false,
+      this.enabled = true});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 50,
       child: TextField(
+        enabled: enabled,
         textAlign: TextAlign.center,
         controller: controller,
         obscureText: obsecureText,
